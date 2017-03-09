@@ -12,7 +12,6 @@ def insatorsvc():
 	    'bindable' : True, 
 	    'tags' : ['private'], 
 	    'plan_updateable' : False,
-	    'serviceKeysSupported' : True,
 	    'plans' : [insator_plans.plan_a(), insator_plans.plan_b()],
 	    'dashboard_client' : {
 	        'id' : uuid.uuid4(),
@@ -23,6 +22,7 @@ def insatorsvc():
 	        'displayName' : 'Insator Service',
 	        'serviceMonitorApi' : 'https://cf-upsi-app.mybluemix.net/healthcheck',
 	        'providerDisplayName' : 'S.D.S',
+	        'serviceKeysSupported' : True,
 	        'longDescription' : 'Write full description of insator service',
 	        'bullets' : [
 	            {
