@@ -12,6 +12,7 @@ def insatorsvc():
 	    'bindable' : True, 
 	    'tags' : ['private'], 
 	    'plan_updateable' : False,
+	    'serviceKeysSupported' : True,
 	    'plans' : [insator_plans.plan_a(), insator_plans.plan_b()],
 	    'dashboard_client' : {
 	        'id' : uuid.uuid4(),
