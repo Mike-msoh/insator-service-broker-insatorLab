@@ -7,7 +7,7 @@ def insatorsvc():
 	insator_service_id = uuid.uuid4() # Generate unique service ID
 	insator_service = {
 	    'id' : insator_service_id, 
-	    'name' : 'SDS-insator-auth-service',
+	    'name' : 'insator-auth-service',
 	    'description' : 'insator service to showcase management of private brokers',
 	    'bindable' : True, 
 	    'tags' : ['private'], 
