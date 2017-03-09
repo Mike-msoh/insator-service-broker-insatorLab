@@ -112,6 +112,11 @@ def catalog():
     #     services offered through this broker
 
     api_version = request.headers.get('X-Broker-Api-Version')
+
+    print (" Accept Language !!! === " , request.accept_languages)
+
+
+
     # Check broker API version
     if not api_version or float(api_version) < X_BROKER_API_VERSION:
         abort(412, "Precondition failed. Missing or incompatible %s. Expecting version %0.1f or later" % (X_BROKER_API_VERSION_NAME, X_BROKER_API_VERSION))
