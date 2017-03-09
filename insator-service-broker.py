@@ -112,10 +112,8 @@ def catalog():
     #     services offered through this broker
 
     api_version = request.headers.get('X-Broker-Api-Version')
-
+    
     print (" Accept Language !!! === " , request.accept_languages)
-
-
 
     # Check broker API version
     if not api_version or float(api_version) < X_BROKER_API_VERSION:
@@ -291,6 +289,7 @@ def catch_all(path):
     page += '<h2>This is a sample service broker for Samsung SDS : insator Solution</h2>'
     page += '<p>See for details.</p>'
     page += '<p>You requested path: /%s </p>' % path
+    page += '<p> Browser Language : /%s </p>' % request.accept_languages
     return page
 
 
