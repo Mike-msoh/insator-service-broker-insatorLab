@@ -296,7 +296,7 @@ def catch_all(path):
     page += '<p>See for details.</p>'
     page += '<p>You requested path: /%s </p>' % path
     page += '<p> Browser Language : %s </p>' % request.accept_languages
-    page += '<p> Browser Language best_match : %s </p>' % request.accept_languages.best_match(['de', 'fr', 'en', 'kr'])
+    page += '<p> Browser Language best_match : %s </p>' % request.accept_languages.best_match(['de', 'fr', 'en', 'ko'])
     return page
 
 
