@@ -2,7 +2,6 @@
 import os                      # to obtain environment info
 from flask import Flask,jsonify,request,abort,make_response
 from flask_basicauth import BasicAuth
-from flaskup import babel
 import json
 import insator_plans
 import service
@@ -278,8 +277,6 @@ def dashboard(instance_id):
 #
 #
 ########################################################
-
-@babel.localeselector
 def get_locale(self):
     return request.accept_languages.best_match(AVAILABLE_LOCALES)
 
@@ -298,14 +295,16 @@ def catch_all(path):
     page += '<h2>This is a sample service broker for Samsung SDS : insator Solution</h2>'
     page += '<p>See for details.</p>'
     page += '<p>You requested path: /%s </p>' % path
+    page += '<p> Browser Language : %s </p>' % request.accept_languages
     page += '<p> Browser Language best_match : %s </p>' % request.accept_languages.best_match(['de', 'fr', 'en', 'kr'])
     return page
 
 
-# port = os.getenv('PORT', '5000')
+port = os.getenv('PORT', '5000')
 if __name__ == "__main__":
-    app.run(debug=True, threaded=True)
-#     app.run(host='0.0.0.0', port=int(port),threaded=True)
-# app.run(host='0.0.0.0', port=int(port),debug=True,threaded=True)
+    app.run(host='0.0.0.0', port=int(port),threaded=True)
+app.run(host='0.0.0.0', port=int(port),debug=True,threaded=True)
+
+    # app.run(debug=True, threaded=True)
 
 
