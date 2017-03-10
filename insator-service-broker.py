@@ -2,10 +2,12 @@
 import os                      # to obtain environment info
 from flask import Flask,jsonify,request,abort,make_response
 from flask_basicauth import BasicAuth
+from flaskup import babel
 import json
 import insator_plans
 import service
 import requests
+
 # from cloudant import Cloudant
 
 
@@ -68,6 +70,8 @@ else:
     # we are local, so set service base
     service_base = "localhost:5000"
 
+# Available Locales 
+AVAILABLE_LOCALES = ['kr', 'en']
 
 
 #############################################################
@@ -77,12 +81,6 @@ else:
 service_dashboard = 'http://www.samsung.com/global/support/globalcontact.html'
 # service_dashboard = 'http://fido-ui-service.mybluemix.net'
 # service_dashboard = "http://"+service_base+"/my-service//dashboard/"
-
-credentials = {'credentials': { \
-        'uri': service_dashboard, \
-        'id': 'empty', \
-        'apiKey': 'empty', \
-      }}
 
 ########################################################
 # Implement Cloud Foundry Broker API
@@ -112,13 +110,12 @@ def catalog():
     #     services offered through this broker
 
     api_version = request.headers.get('X-Broker-Api-Version')
-    
-    print (" Accept Language !!! === " , request.accept_languages)
+    locale = get_locale()
 
     # Check broker API version
     if not api_version or float(api_version) < X_BROKER_API_VERSION:
         abort(412, "Precondition failed. Missing or incompatible %s. Expecting version %0.1f or later" % (X_BROKER_API_VERSION_NAME, X_BROKER_API_VERSION))
-    services={"services": [service.insatorsvc()]}
+    services={"services": [service.insatorsvc(locale)]}
     return jsonify(services)
 
 
@@ -277,6 +274,18 @@ def dashboard(instance_id):
 
 
 ########################################################
+# Check a locale
+#
+#
+########################################################
+
+@babel.localeselector
+def get_locale(self):
+    return request.accept_languages.best_match(AVAILABLE_LOCALES)
+
+
+
+########################################################
 # Catch-all section - return HTML page for testing
 #
 #
@@ -289,13 +298,14 @@ def catch_all(path):
     page += '<h2>This is a sample service broker for Samsung SDS : insator Solution</h2>'
     page += '<p>See for details.</p>'
     page += '<p>You requested path: /%s </p>' % path
-    page += '<p> Browser Language best_match : %s </p>' % request.accept_languages.best_match(['de', 'fr', 'en'])
+    page += '<p> Browser Language best_match : %s </p>' % request.accept_languages.best_match(['de', 'fr', 'en', 'kr'])
     return page
 
 
-port = os.getenv('PORT', '5000')
+# port = os.getenv('PORT', '5000')
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(port),threaded=True)
-app.run(host='0.0.0.0', port=int(port),debug=True,threaded=True)
+    app.run(debug=True, threaded=True)
+#     app.run(host='0.0.0.0', port=int(port),threaded=True)
+# app.run(host='0.0.0.0', port=int(port),debug=True,threaded=True)
 
 
